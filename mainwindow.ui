@@ -23,6 +23,9 @@
       <height>360</height>
      </rect>
     </property>
+    <property name="styleSheet">
+     <string notr="true">background: black;</string>
+    </property>
     <property name="verticalScrollBarPolicy">
      <enum>Qt::ScrollBarAlwaysOff</enum>
     </property>
@@ -135,6 +138,9 @@
       <height>360</height>
      </rect>
     </property>
+    <property name="styleSheet">
+     <string notr="true">background: black;</string>
+    </property>
     <property name="verticalScrollBarPolicy">
      <enum>Qt::ScrollBarAlwaysOff</enum>
     </property>
@@ -200,7 +206,7 @@
      </rect>
     </property>
     <property name="styleSheet">
-     <string notr="true"/>
+     <string notr="true">background: black;</string>
     </property>
     <property name="verticalScrollBarPolicy">
      <enum>Qt::ScrollBarAlwaysOff</enum>
@@ -217,6 +223,9 @@
       <width>640</width>
       <height>360</height>
      </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background: black;</string>
     </property>
     <property name="verticalScrollBarPolicy">
      <enum>Qt::ScrollBarAlwaysOff</enum>
@@ -273,6 +282,102 @@
      <string>Road temp: 0 C</string>
     </property>
    </widget>
+   <widget class="QLabel" name="topLeftLocationTitle">
+    <property name="geometry">
+     <rect>
+      <x>220</x>
+      <y>0</y>
+      <width>200</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Arial</family>
+      <pointsize>10</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">color: white;</string>
+    </property>
+    <property name="text">
+     <string>Location: Heinola</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="lowLeftLocationTitle">
+    <property name="geometry">
+     <rect>
+      <x>220</x>
+      <y>360</y>
+      <width>200</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Arial</family>
+      <pointsize>10</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">color: white;</string>
+    </property>
+    <property name="text">
+     <string>Location: Kangasala</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="topLeftLocationTitle_2">
+    <property name="geometry">
+     <rect>
+      <x>860</x>
+      <y>0</y>
+      <width>200</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Arial</family>
+      <pointsize>10</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">color: white;</string>
+    </property>
+    <property name="text">
+     <string>Location: Viitasaari</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="lowLeftLocationTitle_2">
+    <property name="geometry">
+     <rect>
+      <x>860</x>
+      <y>360</y>
+      <width>200</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Arial</family>
+      <pointsize>10</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">color: white;</string>
+    </property>
+    <property name="text">
+     <string>Location: Kärsämäki</string>
+    </property>
+   </widget>
    <zorder>topRightGraphicsView</zorder>
    <zorder>lowLeftGraphicsView</zorder>
    <zorder>topLeftGraphicsView</zorder>
@@ -285,6 +390,10 @@
    <zorder>lowLeftAirTemp</zorder>
    <zorder>topRightRoadTemp</zorder>
    <zorder>topRightAirTemp</zorder>
+   <zorder>topLeftLocationTitle</zorder>
+   <zorder>lowLeftLocationTitle</zorder>
+   <zorder>topLeftLocationTitle_2</zorder>
+   <zorder>lowLeftLocationTitle_2</zorder>
   </widget>
  </widget>
  <resources/>

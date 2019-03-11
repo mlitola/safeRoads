@@ -8,9 +8,9 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
     this->setWindowTitle("SafeRoads");
 
-    //target url
-    url = QUrl("https://www.kelikamerat.info/sites/default/files/infotripla/2019_03_10/09_40/C0450401_3789688052.jpg");
+    currentIndex = 0;
 
+    url = QUrl("https://www.kelikamerat.info/kelikamerat/Päijät-Häme/Heinola/tie-4/vt4_Heinola");
     doRequest();
 }
 
@@ -27,6 +27,39 @@ void MainWindow::doRequest()
 
 }
 
+void MainWindow::doImageRequest()
+{
+    reply = qnam.get(QNetworkRequest(url));
+    connect(reply, &QNetworkReply::finished, this, &MainWindow::imageDownloadFinished);
+}
+
+void MainWindow::httpFinished()
+{
+    rawHTML = QString::fromUtf8(reply->readAll());
+    parseRawHTML();
+}
+
+void MainWindow::parseRawHTML()
+{
+    /* h4X0red kludge... */
+    if (rawHTML.length() > 99000)
+    {
+        QString parseMore = rawHTML.right(7700).left(1800);
+        // QTextStream(stdout) << parseMore << endl;
+        currentAirTemp = parseMore.split("<span id=\"air-temp-image\">")[1].left(25).trimmed();
+        currentRoadTemp = parseMore.split("<span id=\"road-temp-image\">")[1].left(25).trimmed();
+        QString parseImageUrl = "https://www.kelikamerat.info" + parseMore.split("src=\"")[1].split("\"")[0];
+        url = QUrl(parseImageUrl);
+        doImageRequest();
+    }
+}
+
+void MainWindow::imageDownloadFinished()
+{
+    loadImage = QImage::fromData(reply->readAll(), "JPG");
+    refreshGUI();
+}
+
 void MainWindow::refreshGUI()
 {
     if (!loadImage.isNull())
@@ -35,21 +68,36 @@ void MainWindow::refreshGUI()
         QPixmap qpm = QPixmap::fromImage(resizedImage);
         QGraphicsScene *scene = new QGraphicsScene();
         scene->addPixmap(qpm);
-        ui->topLeftGraphicsView->setScene(scene);
-        ui->lowLeftGraphicsView->setScene(scene);
-        ui->topRightGraphicsView->setScene(scene);
-        ui->lowRightGraphicsView->setScene(scene);
+
+        if (currentIndex == 0)
+        {
+            ui->topLeftGraphicsView->setScene(scene);
+            ui->topLeftAirTemp->setText("Air temp:" + currentAirTemp + " C");
+            ui->topLeftRoadTemp->setText("Road temp:" + currentRoadTemp + " C");
+            url = QUrl("https://www.kelikamerat.info/kelikamerat/Pirkanmaa/Kangasala/tie-9/vt9_Suinula");
+        }
+        if (currentIndex == 1)
+        {
+            ui->lowLeftGraphicsView->setScene(scene);
+            ui->lowLeftAirTemp->setText("Air temp:" + currentAirTemp + " C");
+            ui->lowLeftRoadTemp->setText("Road temp:" + currentRoadTemp + " C");
+            url = QUrl("https://www.kelikamerat.info/kelikamerat/Keski-Suomi/Viitasaari/tie-4/vt4_Viitasaari_Taimoniemi");
+        }
+        if (currentIndex == 2)
+        {
+            ui->topRightGraphicsView->setScene(scene);
+            ui->topRightAirTemp->setText("Air temp:" + currentAirTemp + " C");
+            ui->topRightRoadTemp->setText("Road temp:" + currentRoadTemp + " C");
+            url = QUrl("https://www.kelikamerat.info/kelikamerat/Pohjois-Pohjanmaa/Kärsämäki/tie-4/vt4_Kärsämäki");
+        }
+        if (currentIndex == 3)
+        {
+            ui->lowRightGraphicsView->setScene(scene);
+            ui->lowRightAirTemp->setText("Air temp:" + currentAirTemp + " C");
+            ui->lowRightRoadTemp->setText("Road temp:" + currentRoadTemp + " C");
+        }
     }
-}
 
-void MainWindow::refreshGUIValues()
-{
-    refreshGUI();
-}
-
-void MainWindow::httpFinished()
-{
-    loadImage = QImage::fromData(reply->readAll(), "JPG");
-    refreshGUIValues();
-    reply = nullptr;
+    currentIndex++;
+    doRequest();
 }

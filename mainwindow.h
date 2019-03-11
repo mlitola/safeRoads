@@ -7,6 +7,7 @@
 #include <QtNetwork>
 #include <QUrl>
 
+#include <QTextStream>
 
 namespace Ui {
     class MainWindow;
@@ -21,18 +22,24 @@ public:
     ~MainWindow();
 
 private slots:
-    void httpFinished();
     void doRequest();
+    void doImageRequest();
+    void httpFinished();
+    void parseRawHTML();
+    void imageDownloadFinished();
     void refreshGUI();
-    void refreshGUIValues();
 
 private:
     Ui::MainWindow *ui;
     QUrl url;
     QNetworkAccessManager qnam;
     QNetworkReply *reply;
+    QString rawHTML;
     QImage loadImage;
     QImage resizedImage;
+    QString currentAirTemp;
+    QString currentRoadTemp;
+    int currentIndex;
 };
 
 #endif // MAINWINDOW_H
